@@ -2,24 +2,41 @@
 
 ## Этап 1. Модель данных
 
-Данные `Participant`, `Command` и `Output` хранятся в словарях.
-Реализованы создание, получение всех записей, получение записи по ID
-и выборка команд участников за последние шесть минут.
+`src/model.py` хранит `Participant`, `Command` и `Output` в словарях.
+`src/repl.py` позволяет вызывать десять функций модели вручную.
 
-`locale` — обязательное поле `Participant` из ER-диаграммы.
-
-Запуск интерактивного режима:
+Локальный запуск:
 
 ```sh
 python -m src.repl
 ```
 
-Пример:
+## Этап 2. RPC поверх TCP
+
+`src/protocol.py` описывает заголовки и XML-тела сообщений.
+`src/server.py` принимает запросы, вызывает функции модели и ведёт журнал.
+`src/client.py` предоставляет те же методы через TCP.
+
+В первом терминале:
+
+```sh
+python -m src.server
+```
+
+Во втором терминале:
+
+```sh
+python -m src.repl --rpc
+```
+
+Адрес по умолчанию — `127.0.0.1:8765`. Его можно изменить параметрами
+`--host` и `--port`. Эти параметры относятся только к этапу 2.
+
+Пример команд REPL:
 
 ```text
 create_participant 1000000 ru-RU windows
-get_participants
 create_command 1000000 "SELECT 1" 1 queued 1000000
-select_recent_participant_commands 1000100
+get_commands
 exit
 ```

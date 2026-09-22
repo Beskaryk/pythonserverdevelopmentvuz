@@ -1,8 +1,10 @@
-"""Интерактивный режим модели."""
+"""Интерактивный режим."""
 
+import argparse
 import shlex
 
-from . import model
+from . import model, protocol
+from .client import Client
 
 HELP = """Команды:
   create_participant timestamp locale platform
@@ -50,7 +52,7 @@ def evaluate(target, line):
     try:
         return repr(getattr(target, parts[0])(
             *[convert(token) for token in parts[1:]]))
-    except model.ModelError as error:
+    except (model.ModelError, protocol.ProtocolError) as error:
         return f"{type(error).__name__}: {error}"
     except TypeError as error:
         return f"не тот набор аргументов: {error}"
@@ -71,7 +73,16 @@ def loop(target):
 
 
 def main():
-    loop(model)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--rpc", action="store_true")
+    parser.add_argument("--host", default=protocol.HOST)
+    parser.add_argument("--port", type=int, default=protocol.PORT)
+    options = parser.parse_args()
+    if not options.rpc:
+        loop(model)
+        return
+    with Client(options.host, options.port) as client:
+        loop(client)
 
 
 if __name__ == "__main__":
