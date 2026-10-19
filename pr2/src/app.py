@@ -7,17 +7,20 @@ from flask import Flask, jsonify, request
 from werkzeug.exceptions import BadRequest
 
 from .executor import execute
-from .storage import (MemoryStore, RecordNotFoundError, StorageError,
-                      ValidationError, parse_filters)
+from .storage import RecordNotFoundError, ValidationError, parse_filters
+from .tiny_storage import TinyStore
 
 PARTICIPANT_INTS = {"identifier", "timestamp"}
 COMMAND_INTS = {"identifier", "timestamp", "participant", "enqueued"}
 OUTPUT_INTS = {"identifier", "timestamp", "command"}
 
 
-def create_app(testing=False, store=None, clock=time.time):
+def create_app(testing=False, store=None, clock=time.time,
+               database_path=None):
+    default_path = Path(__file__).parents[1] / "data/database.json"
     app = Flask(__name__)
-    app.config.update(TESTING=testing, STORE=store or MemoryStore(),
+    app.config.update(TESTING=testing,
+                      STORE=store or TinyStore(database_path or default_path),
                       CLOCK=clock,
                       RESULT_DIR=Path(__file__).parents[1] / "data/results")
 

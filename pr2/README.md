@@ -45,3 +45,16 @@ python -m pr2.src.server --test
 python -m coverage run --branch --source=pr2/src -m pytest pr2/tests
 python -m coverage report -m
 ```
+
+## Этап 3. TinyDB
+
+Основное хранилище использует TinyDB. По умолчанию база находится в
+`pr2/data/database.json`.
+
+Запуск с отдельным файлом базы:
+
+```powershell
+python -m pr2.src.server --database pr2/data/demo.json
+```
+
+Повторный запуск с тем же путём сохраняет созданные записи.

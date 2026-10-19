@@ -2,3 +2,4 @@ Flask
 hypothesis
 pytest
 coverage
+tinydb
