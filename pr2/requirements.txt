@@ -1,0 +1,4 @@
+Flask
+hypothesis
+pytest
+coverage
