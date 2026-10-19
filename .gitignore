@@ -7,3 +7,6 @@ htmlcov/
 .idea/
 .vscode/
 .venv/
+pr2/data/
+pr2/.coverage
+pr2/htmlcov/
