@@ -1,6 +1,8 @@
 # Практическая работа №2, вариант 5
 
-Используются Flask, Pydantic, simpleeval, requests и Hypothesis.
+В работе используются готовые библиотеки: Flask для HTTP API,
+Pydantic для проверки данных, simpleeval для выражений, requests для
+клиента, TinyDB для хранения и Hypothesis для модельных тестов.
 
 ## Этап 1. Преобразование данных
 
@@ -47,3 +49,16 @@ python -m pr2.src.server --test
 python -m coverage run --branch --source=pr2/src -m pytest pr2/tests
 python -m coverage report -m
 ```
+
+## Этап 3. TinyDB
+
+Основное хранилище использует TinyDB. По умолчанию база находится в
+`pr2/data/database.json`.
+
+Запуск с отдельным файлом базы:
+
+```powershell
+python -m pr2.src.server --database pr2/data/demo.json
+```
+
+Повторный запуск с тем же путём сохраняет созданные записи.

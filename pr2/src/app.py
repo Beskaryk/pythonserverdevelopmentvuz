@@ -11,13 +11,16 @@ from werkzeug.exceptions import BadRequest
 from .executor import execute
 from .schemas import (CommandCreate, CommandFilters, IdentifierQuery,
                       OutputFilters, ParticipantCreate, ParticipantFilters)
-from .storage import MemoryStore, RecordNotFoundError, ValidationError
+from .storage import RecordNotFoundError, ValidationError
+from .tiny_storage import TinyStore
 
 
-def create_app(testing=False, store=None, clock=time.time):
+def create_app(testing=False, store=None, clock=time.time,
+               database_path=None):
+    default_path = Path(__file__).parents[1] / "data/database.json"
     app = Flask(__name__)
     app.config.update(TESTING=testing,
-                      STORE=store or MemoryStore(),
+                      STORE=store or TinyStore(database_path or default_path),
                       CLOCK=clock,
                       RESULT_DIR=Path(__file__).parents[1] / "data/results")
 
