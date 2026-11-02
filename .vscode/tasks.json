@@ -1,0 +1,138 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "PR2: 0. Установить зависимости",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "pip",
+                "install",
+                "-r",
+                "pr2/requirements.txt"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Выбрать этап 1",
+            "type": "process",
+            "command": "git",
+            "args": [
+                "checkout",
+                "main~2"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Выбрать этап 2",
+            "type": "process",
+            "command": "git",
+            "args": [
+                "checkout",
+                "main~1"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Выбрать этап 3",
+            "type": "process",
+            "command": "git",
+            "args": [
+                "checkout",
+                "main"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Этап 1 - три примера",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "pr2.src.demo"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Этап 2 - Flask",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "pr2.src.server"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Этап 2 - Flask test mode",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "pr2.src.server",
+                "--test"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Этап 3 - Flask и TinyDB",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "pr2.src.server",
+                "--database",
+                "pr2/data/demo.json"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Тесты",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "pytest",
+                "pr2/tests",
+                "-q"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Coverage - собрать",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "coverage",
+                "run",
+                "--branch",
+                "--source=pr2/src",
+                "-m",
+                "pytest",
+                "pr2/tests",
+                "-q"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "PR2: Coverage - показать",
+            "type": "process",
+            "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "args": [
+                "-m",
+                "coverage",
+                "report",
+                "-m"
+            ],
+            "dependsOn": "PR2: Coverage - собрать",
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,53 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PR2: Этап 1 - три примера",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "module": "pr2.src.demo",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "PR2: Этап 2 - Flask",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "module": "pr2.src.server",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "PR2: Этап 2 - Flask test mode",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "module": "pr2.src.server",
+            "args": ["--test"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "PR2: Этап 3 - Flask и TinyDB",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "module": "pr2.src.server",
+            "args": ["--database", "pr2/data/demo.json"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "PR2: Тесты Hypothesis",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "module": "pytest",
+            "args": ["pr2/tests", "-q"],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}
